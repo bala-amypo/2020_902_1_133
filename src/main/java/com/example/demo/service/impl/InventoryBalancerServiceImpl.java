@@ -27,7 +27,6 @@ public class InventoryBalancerServiceImpl implements InventoryBalancerService {
     private final DemandForecastRepository demandForecastRepository;
     private final StoreRepository storeRepository;
 
-    // ⚠️ Constructor order MUST be exactly this
     public InventoryBalancerServiceImpl(
             TransferSuggestionRepository transferSuggestionRepository,
             InventoryLevelRepository inventoryLevelRepository,
