@@ -1,47 +1,64 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.DemandForecast;
-import com.example.demo.service.DemandForecastService;
-
+import com.example.demo.entity.TransferSuggestion;
+import com.example.demo.service.TransferSuggestionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/forecasts")
-public class DemandForecastController {
+@RequestMapping("/api/transfer-suggestions")
+public class TransferSuggestionController {
 
-    private final DemandForecastService demandForecastService;
+    private final TransferSuggestionService transferSuggestionService;
 
-    public DemandForecastController(DemandForecastService demandForecastService) {
-        this.demandForecastService = demandForecastService;
+    @Autowired
+    public TransferSuggestionController(TransferSuggestionService transferSuggestionService) {
+        this.transferSuggestionService = transferSuggestionService;
     }
 
+    // Create a new transfer suggestion
     @PostMapping
-    public ResponseEntity<DemandForecast> createForecast(
-            @RequestBody DemandForecast forecast) {
-
-        DemandForecast saved =
-                demandForecastService.createForecast(forecast);
-        return ResponseEntity.ok(saved);
+    public ResponseEntity<TransferSuggestion> createTransferSuggestion(@RequestBody TransferSuggestion transferSuggestion) {
+        TransferSuggestion savedSuggestion = transferSuggestionService.createTransferSuggestion(transferSuggestion);
+        return ResponseEntity.ok(savedSuggestion);
     }
 
+    // Get all transfer suggestions
+    @GetMapping
+    public ResponseEntity<List<TransferSuggestion>> getAllTransferSuggestions() {
+        List<TransferSuggestion> suggestions = transferSuggestionService.getAllTransferSuggestions();
+        return ResponseEntity.ok(suggestions);
+    }
+
+    // Get transfer suggestions by store ID
     @GetMapping("/store/{storeId}")
-    public ResponseEntity<List<DemandForecast>> getForecastsForStore(
-            @PathVariable Long storeId) {
-
-        return ResponseEntity.ok(
-                demandForecastService.getForecastsForStore(storeId));
+    public ResponseEntity<List<TransferSuggestion>> getSuggestionsByStore(@PathVariable Long storeId) {
+        List<TransferSuggestion> suggestions = transferSuggestionService.getSuggestionsByStore(storeId);
+        return ResponseEntity.ok(suggestions);
     }
 
-    @GetMapping("/store/{storeId}/product/{productId}")
-    public ResponseEntity<DemandForecast> getForecastForStoreAndProduct(
-            @PathVariable Long storeId,
-            @PathVariable Long productId) {
+    // Get transfer suggestion by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<TransferSuggestion> getTransferSuggestion(@PathVariable Long id) {
+        TransferSuggestion suggestion = transferSuggestionService.getTransferSuggestion(id);
+        return ResponseEntity.ok(suggestion);
+    }
 
-        DemandForecast forecast =
-                demandForecastService.getForecast(storeId, productId);
-        return ResponseEntity.ok(forecast);
+    // Update a transfer suggestion
+    @PutMapping("/{id}")
+    public ResponseEntity<TransferSuggestion> updateTransferSuggestion(@PathVariable Long id,
+                                                                       @RequestBody TransferSuggestion transferSuggestion) {
+        TransferSuggestion updatedSuggestion = transferSuggestionService.updateTransferSuggestion(id, transferSuggestion);
+        return ResponseEntity.ok(updatedSuggestion);
+    }
+
+    // Delete a transfer suggestion
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTransferSuggestion(@PathVariable Long id) {
+        transferSuggestionService.deleteTransferSuggestion(id);
+        return ResponseEntity.noContent().build();
     }
 }
