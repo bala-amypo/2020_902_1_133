@@ -1,42 +1,24 @@
 package com.example.demo.entity;
 
-import java.sql.Timestamp;
 import jakarta.persistence.*;
 
 @Entity
-@Table(
-    name = "product",
-    uniqueConstraints = @UniqueConstraint(columnNames = "sku")
-)
-public class Product {
+@Table(name = "inventory_levels")
+public class InventoryLevel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String sku;
-    private String name;
-    private String category;
-    private Boolean active = true;
+    private Long storeId;
 
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private Long productId;
 
-    @PrePersist
-    protected void onCreate() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdAt = now;
-        this.updatedAt = now;
+    private Integer quantity;
+
+    public InventoryLevel() {
     }
 
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = new Timestamp(System.currentTimeMillis());
-    }
-
-    public Product() {}
-
-    
     public Long getId() {
         return id;
     }
@@ -45,51 +27,27 @@ public class Product {
         this.id = id;
     }
 
-    public String getSku() {
-        return sku;
+    public Long getStoreId() {
+        return storeId;
     }
 
-    public void setSku(String sku) {
-        this.sku = sku;
+    public void setStoreId(Long storeId) {
+        this.storeId = storeId;
     }
 
-    public String getName() {
-        return name;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
-    public String getCategory() {
-        return category;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }
