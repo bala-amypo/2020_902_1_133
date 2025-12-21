@@ -19,7 +19,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    // Constructor (do NOT use Lombok)
+    
     public AuthServiceImpl(UserAccountRepository userAccountRepository,
                            PasswordEncoder passwordEncoder,
                            JwtUtil jwtUtil) {

@@ -25,7 +25,7 @@ public class DemandForecast {
 
     public DemandForecast() {}
 
-    // getters and setters
+    
 
     public Long getId() {
         return id;

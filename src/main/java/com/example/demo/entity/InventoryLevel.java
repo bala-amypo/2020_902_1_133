@@ -36,7 +36,7 @@ public class Product {
 
     public Product() {}
 
-    // Getters and Setters
+    
     public Long getId() {
         return id;
     }

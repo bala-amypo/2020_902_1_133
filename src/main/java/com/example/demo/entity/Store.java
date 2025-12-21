@@ -25,7 +25,7 @@ public class Store implements Serializable {
 
     public Store() {}
 
-    // Getters and Setters
+    
     public Long getId() {
         return id;
     }
