@@ -1,32 +1,49 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AuthRequestDto;
-import com.example.demo.dto.AuthResponseDto;
-import com.example.demo.dto.RegisterRequestDto;
-import com.example.demo.service.AuthService;
-
+import com.example.demo.entity.Store;
+import com.example.demo.service.StoreService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/auth")
-public class AuthController {
+@RequestMapping("/api/stores")
+public class StoreController {
 
-    private final AuthService authService;
+    private final StoreService storeService;
 
-    public AuthController(AuthService authService) {
-        this.authService = authService;
+    @Autowired
+    public StoreController(StoreService storeService) {
+        this.storeService = storeService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody RegisterRequestDto dto) {
-        authService.register(dto);
-        return ResponseEntity.ok().build();
+    @PostMapping
+    public ResponseEntity<Store> createStore(@RequestBody Store store) {
+        return ResponseEntity.ok(storeService.createStore(store));
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthResponseDto> login(@RequestBody AuthRequestDto dto) {
-        AuthResponseDto response = authService.login(dto);
-        return ResponseEntity.ok(response);
+    @GetMapping
+    public ResponseEntity<List<Store>> getAllStores() {
+        return ResponseEntity.ok(storeService.getAllStores());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Store> getStoreById(@PathVariable Long id) {
+        return ResponseEntity.ok(storeService.getStoreById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Store> updateStore(
+            @PathVariable Long id,
+            @RequestBody Store store) {
+        return ResponseEntity.ok(storeService.updateStore(id, store));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteStore(@PathVariable Long id) {
+        storeService.deleteStore(id);
+        return ResponseEntity.noContent().build();
     }
 }
