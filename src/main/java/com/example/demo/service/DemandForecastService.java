@@ -1,13 +1,10 @@
 package com.example.demo.service;
 
-import java.util.List;
 import com.example.demo.entity.DemandForecast;
+import java.util.List;
 
 public interface DemandForecastService {
-
-    DemandForecast saveForecast(DemandForecast demandForecast);
-
-    List<DemandForecast> getAllForecasts();
-
-    DemandForecast getForecastById(Long id);
+    DemandForecast createForecast(DemandForecast forecast);
+    List<DemandForecast> getForecastsForStore(Long storeId);
+    DemandForecast getForecast(Long storeId, Long productId);
 }
