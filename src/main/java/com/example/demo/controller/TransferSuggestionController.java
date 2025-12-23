@@ -1,33 +1,24 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.TransferSuggestion;
-import com.example.demo.service.TransferSuggestionService;
-import org.springframework.web.bind.annotation.*;
+import com.example.demo.service.InventoryBalancerService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/transfer")
+@RequestMapping("/api/transfers")
 public class TransferSuggestionController {
 
-    private final TransferSuggestionService service;
+    private final InventoryBalancerService inventoryBalancerService;
 
-    public TransferSuggestionController(TransferSuggestionService service) {
-        this.service = service;
+    public TransferSuggestionController(InventoryBalancerService inventoryBalancerService) {
+        this.inventoryBalancerService = inventoryBalancerService;
     }
 
-    @PostMapping
-    public TransferSuggestion createTransfer(@RequestBody TransferSuggestion suggestion) {
-        return service.createTransferSuggestion(suggestion);
-    }
-
-    @GetMapping("/source/{storeId}")
-    public List<TransferSuggestion> getBySourceStore(@PathVariable Long storeId) {
-        return service.getSuggestionsBySourceStore(storeId);
-    }
-
-    @GetMapping("/target/{storeId}")
-    public List<TransferSuggestion> getByTargetStore(@PathVariable Long storeId) {
-        return service.getSuggestionsByTargetStore(storeId);
+    @GetMapping("/suggestions")
+    public List<String> getTransferSuggestions() {
+        return inventoryBalancerService.generateTransferSuggestions();
     }
 }
