@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Product;
-import com.example.demo.service.ProductService;
 import com.example.demo.exception.BadRequestException;
+import com.example.demo.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +13,6 @@ public class ProductController {
 
     private final ProductService productService;
 
-    // Constructor-based dependency injection
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
@@ -33,6 +32,4 @@ public class ProductController {
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
-
-   
 }
