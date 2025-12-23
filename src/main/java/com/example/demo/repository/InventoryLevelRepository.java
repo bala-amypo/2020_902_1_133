@@ -1,4 +1,3 @@
-
 package com.example.demo.repository;
 
 import java.util.List;
@@ -10,7 +9,7 @@ import com.example.demo.entity.Product;
 
 @Repository
 public interface InventoryLevelRepository extends JpaRepository<InventoryLevel, Long> {
-    InventoryLevel findByStoreAndProduct(Store store, Product product);
-    List<InventoryLevel> findByStore_Id(Long storeId);
-    List<InventoryLevel> findByProduct_Id(Long productId);
+    InventoryLevel findByStoreAndProduct(Store store, Product product); // keep if you have Store & Product objects
+    List<InventoryLevel> findByStoreId(Long storeId);   
+    List<InventoryLevel> findByProductId(Long productId); 
 }
