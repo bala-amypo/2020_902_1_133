@@ -1,13 +1,20 @@
-package com.example.demo.service;
-
-import java.util.List;
-import com.example.demo.entity.InventoryLevel;
-
 public interface InventoryLevelService {
+    InventoryLevel createOrUpdateInventory(InventoryLevel inventory);
+    List<InventoryLevel> getInventoryForStore(Long storeId);
+    List<InventoryLevel> getInventoryForProduct(Long productId);
+}
+@Service
+public class InventoryLevelServiceImpl implements InventoryLevelService {
 
-    InventoryLevel saveInventory(InventoryLevel inventoryLevel);
+    public InventoryLevel createOrUpdateInventory(InventoryLevel inventory) {
+        return inventory;
+    }
 
-    List<InventoryLevel> getAllInventory();
+    public List<InventoryLevel> getInventoryForStore(Long storeId) {
+        return List.of();
+    }
 
-    InventoryLevel getInventoryById(Long id);
+    public List<InventoryLevel> getInventoryForProduct(Long productId) {
+        return List.of();
+    }
 }

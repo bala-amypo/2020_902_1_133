@@ -1,13 +1,19 @@
-package com.example.demo.service;
-
-import java.util.List;
-import com.example.demo.entity.Store;
-
 public interface StoreService {
+    Store createStore(Store store);
+    Store updateStore(Long id, Store store);
+    void deleteStore(Long id);
+}
+@Service
+public class StoreServiceImpl implements StoreService {
 
-    Store saveStore(Store store);
+    public Store createStore(Store store) {
+        return store;
+    }
 
-    List<Store> getAllStores();
+    public Store updateStore(Long id, Store store) {
+        return store;
+    }
 
-    Store getStoreById(Long id);
+    public void deleteStore(Long id) {
+    }
 }
