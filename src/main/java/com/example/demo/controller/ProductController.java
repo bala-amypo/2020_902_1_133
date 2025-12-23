@@ -34,5 +34,5 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    // Add more endpoints if needed
+   
 }
