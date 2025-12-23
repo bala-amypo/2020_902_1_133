@@ -1,35 +1,26 @@
-
 package com.example.demo.service.impl;
 
-import java.util.List;
-
+import com.example.demo.entity.InventoryLevel;
+import com.example.demo.service.InventoryLevelService;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.InventoryLevel;
-import com.example.demo.repository.InventoryLevelRepository;
-import com.example.demo.service.InventoryLevelService;
+import java.util.List;
 
 @Service
 public class InventoryLevelServiceImpl implements InventoryLevelService {
 
-    private final InventoryLevelRepository inventoryLevelRepository;
-
-    public InventoryLevelServiceImpl(InventoryLevelRepository inventoryLevelRepository) {
-        this.inventoryLevelRepository = inventoryLevelRepository;
+    @Override
+    public InventoryLevel createOrUpdateInventory(InventoryLevel inventory) {
+        return inventory;
     }
 
     @Override
-    public InventoryLevel saveInventory(InventoryLevel inventory) {
-        return inventoryLevelRepository.save(inventory);
+    public List<InventoryLevel> getInventoryForStore(Long storeId) {
+        return List.of();
     }
 
     @Override
-    public List<InventoryLevel> getAllInventory() {
-        return inventoryLevelRepository.findAll();
-    }
-
-    @Override
-    public InventoryLevel getInventoryById(Long id) {
-        return inventoryLevelRepository.findById(id).orElse(null);
+    public List<InventoryLevel> getInventoryForProduct(Long productId) {
+        return List.of();
     }
 }
