@@ -1,53 +1,36 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "inventory_levels")
-public class InventoryLevel {
+public class InventoryLevel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long storeId;
-
-    private Long productId;
-
     private Integer quantity;
 
-    public InventoryLevel() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
 
-    public Long getId() {
-        return id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // getters and setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getStoreId() {
-        return storeId;
-    }
+    public Integer getQuantity() { return quantity; }
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
-    public void setStoreId(Long storeId) {
-        this.storeId = storeId;
-    }
+    public Store getStore() { return store; }
+    public void setStore(Store store) { this.store = store; }
 
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
+    public Product getProduct() { return product; }
+    public void setProduct(Product product) { this.product = product; }
 }
