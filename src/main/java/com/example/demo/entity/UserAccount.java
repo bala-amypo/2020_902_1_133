@@ -1,3 +1,12 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 @Entity
 @Table(name = "users")
 public class UserAccount {
@@ -6,11 +15,14 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     private String password;
     private String role;
+
+    // REQUIRED by JPA
+    public UserAccount() {}
 
     public Long getId() {
         return id;
