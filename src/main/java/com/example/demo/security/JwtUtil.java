@@ -1,33 +1,32 @@
-package com.example.demo.security;
-
-import com.example.demo.entity.UserAccount;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.stereotype.Component;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.security.Keys;
 
+import java.security.Key;
 import java.util.Date;
 
-@Component
 public class JwtUtil {
 
-    private final String secret = "secret-key";
-    private final long expirationMs = 3600000;
+    private static final String SECRET_KEY = "your-256-bit-secret-your-256-bit-secret"; // must be 256-bit for HS256
 
-    public String generateToken(UserAccount user) {
-        return Jwts.builder()
-                .setSubject(user.getEmail())
-                .claim("role", user.getRole())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
-                .signWith(SignatureAlgorithm.HS256, secret)
-                .compact();
+    private Key getSigningKey() {
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    }
+
+    public Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())   // ⚡ important
+                .build()                           // ⚡ build the parser first
+                .parseClaimsJws(token)             // now parseClaimsJws works
+                .getBody();
     }
 
     public String extractUsername(String token) {
-        return Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        return extractAllClaims(token).getSubject();
     }
+
+    public boolean isTokenExpired(String token) {
+        return extractAllClaims(token).getExpiration().before(new Date());
+    }
+
 }
