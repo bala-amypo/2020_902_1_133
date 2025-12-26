@@ -4,12 +4,13 @@ import com.example.demo.model.UserAccount;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -20,13 +21,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserAccount user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-        return new org.springframework.security.core.userdetails.User(
+        return new User(
                 user.getUsername(),
                 user.getPassword(),
-                List.of(new SimpleGrantedAuthority(user.getRole())) // assuming UserAccount has a 'role' field
+                Collections.singletonList(new SimpleGrantedAuthority(user.getRole()))
         );
     }
 }
-

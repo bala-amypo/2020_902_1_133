@@ -1,10 +1,14 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,8 +19,6 @@ public class UserAccount {
     private Long id;
 
     private String username;
-
     private String password;
-
-    private String role; 
+    private String role; // e.g., "ROLE_USER" or "ROLE_ADMIN"
 }
