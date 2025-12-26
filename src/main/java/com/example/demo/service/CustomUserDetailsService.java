@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.UserAccount;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.UserAccountRepository; // <-- corrected
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,11 +16,11 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserAccountRepository userAccountRepository; // <-- corrected
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserAccount user = userRepository.findByUsername(username)
+        UserAccount user = userAccountRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
         return new User(
