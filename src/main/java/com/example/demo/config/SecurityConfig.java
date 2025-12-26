@@ -32,19 +32,21 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            // disable csrf for H2 / testing
             .csrf(csrf -> csrf.disable())
-
-            // authorize requests
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
             )
-
-            // ⭐ VERY IMPORTANT: use DB users
             .userDetailsService(userDetailsService)
+            .formLogin(form -> form
+                .defaultSuccessUrl("/", true)
+                .permitAll()
+            )
+            .logout(logout -> logout.permitAll());
 
-            // use basic auth (popup)
-            .httpBasic();
+        http.headers(headers ->
+            headers.frameOptions(frame -> frame.disable())
+        );
 
         return http.build();
     }
