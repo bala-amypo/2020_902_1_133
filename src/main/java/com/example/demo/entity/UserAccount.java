@@ -1,50 +1,28 @@
-package com.example.demo.entity;
+package com.example.demo.service;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import com.example.demo.entity.UserAccount;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-@Entity
-@Table(name = "users")
-public class UserAccount {
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Override
+    public UserDetails loadUserByUsername(String email)
+            throws UsernameNotFoundException {
 
-    @Column(unique = true, nullable = false)
-    private String email;
+        // TEMP user for testing (since no DB yet)
+        if (!email.equals("test@example.com")) {
+            throw new UsernameNotFoundException("User not found");
+        }
 
-    private String fullName;
-
-    @Column(nullable = false)
-    private String password;
-
-    private String role;
-
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
-    @PrePersist
-    public void prePersist() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
+        return User.builder()
+                .username(email)
+                .password("{noop}password") // no encoding for now
+                .roles("USER")
+                .build();
     }
-
-    @PreUpdate
-    public void preUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
-
-    // getters & setters
-    public Long getId() { return id; }
-    public String getEmail() { return email; }
-    public String getFullName() { return fullName; }
-    public String getPassword() { return password; }
-    public String getRole() { return role; }
-
-    public void setId(Long id) { this.id = id; }
-    public void setEmail(String email) { this.email = email; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
-    public void setPassword(String password) { this.password = password; }
-    public void setRole(String role) { this.role = role; }
 }
