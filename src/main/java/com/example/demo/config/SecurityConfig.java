@@ -23,16 +23,29 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
+            // disable csrf for H2 / testing
             .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+
+            // authorize requests
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().authenticated()
+            )
+
+            // ⭐ VERY IMPORTANT: use DB users
+            .userDetailsService(userDetailsService)
+
+            // use basic auth (popup)
             .httpBasic();
+
         return http.build();
     }
 }
