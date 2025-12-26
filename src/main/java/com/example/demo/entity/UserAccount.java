@@ -1,52 +1,50 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
+import java.time.LocalDateTime;
 
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "users")
-public class UserAccount implements UserDetails {
+public class UserAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String username;
+    private String email;
+
+    private String fullName;
 
     @Column(nullable = false)
     private String password;
 
-    // Optional: Add roles/authorities later
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null; // replace with roles if needed
+    private String role;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+    // getters & setters
+    public Long getId() { return id; }
+    public String getEmail() { return email; }
+    public String getFullName() { return fullName; }
+    public String getPassword() { return password; }
+    public String getRole() { return role; }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+    public void setId(Long id) { this.id = id; }
+    public void setEmail(String email) { this.email = email; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
+    public void setPassword(String password) { this.password = password; }
+    public void setRole(String role) { this.role = role; }
 }
