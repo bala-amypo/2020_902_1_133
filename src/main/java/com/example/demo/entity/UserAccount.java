@@ -1,28 +1,52 @@
-package com.example.demo.service;
+package com.example.demo.entity;
 
-import com.example.demo.entity.UserAccount;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import jakarta.persistence.*;
 
-@Service
-public class CustomUserDetailsService implements UserDetailsService {
+@Entity
+@Table(name = "users")
+public class UserAccount {
 
-    @Override
-    public UserDetails loadUserByUsername(String email)
-            throws UsernameNotFoundException {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        // TEMP user for testing (since no DB yet)
-        if (!email.equals("test@example.com")) {
-            throw new UsernameNotFoundException("User not found");
-        }
+    private String email;
+    private String password;
+    private String role;
 
-        return User.builder()
-                .username(email)
-                .password("{noop}password") // no encoding for now
-                .roles("USER")
-                .build();
+    public UserAccount() {}
+
+    public UserAccount(String email, String password, String role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
