@@ -942,11 +942,11 @@ public class MultiLocationInventoryBalancerTest extends AbstractTestNGSpringCont
 
     @Test(priority = 70, groups = "security")
     public void t46_jwt_generateToken_and_extractUsername() {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", 999L);
-        claims.put("role", "ROLE_TEST");
+        UserAccount user = new UserAccount();
+        user.setEmail("jwtuser@test.com");
+        user.setRole("ROLE_TEST");
 
-        String token = jwtUtil.generateToken(claims, "jwtuser@test.com");
+        String token = jwtUtil.generateToken(user);
         Assert.assertNotNull(token);
 
         String username = jwtUtil.getUsername(token);
@@ -955,20 +955,22 @@ public class MultiLocationInventoryBalancerTest extends AbstractTestNGSpringCont
 
     @Test(priority = 71, groups = "security")
     public void t47_jwt_isTokenValid_forCorrectUser() {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", 1000L);
+        UserAccount user = new UserAccount();
+        user.setEmail("valid@test.com");
+        user.setRole("ROLE_USER");
 
-        String token = jwtUtil.generateToken(claims, "valid@test.com");
+        String token = jwtUtil.generateToken(user);
         boolean valid = jwtUtil.isTokenValid(token, "valid@test.com");
         Assert.assertTrue(valid);
     }
 
     @Test(priority = 72, groups = "security")
     public void t48_jwt_isTokenInvalid_forWrongUser() {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", 1001L);
+        UserAccount user = new UserAccount();
+        user.setEmail("one@test.com");
+        user.setRole("ROLE_USER");
 
-        String token = jwtUtil.generateToken(claims, "one@test.com");
+        String token = jwtUtil.generateToken(user);
         boolean valid = jwtUtil.isTokenValid(token, "two@test.com");
         Assert.assertFalse(valid);
     }
