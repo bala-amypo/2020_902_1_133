@@ -131,10 +131,6 @@ public class InventoryBalancerServiceImpl implements InventoryBalancerService {
                 suggestion.setQuantity(10);
                 suggestion.setPriority("MEDIUM");
                 suggestion.setStatus("PENDING");
-
-                // ❌ setSuggestedAt REMOVED
-                // generatedAt will be auto-set by @PrePersist in entity
-
                 suggestions.add(
                         transferSuggestionRepository.save(suggestion)
                 );
@@ -146,7 +142,6 @@ public class InventoryBalancerServiceImpl implements InventoryBalancerService {
 
     @Override
     public List<TransferSuggestion> getSuggestionsForStore(Long storeId) {
-        // 🔥 FIXED METHOD NAME
         return transferSuggestionRepository.findBySourceStore_Id(storeId);
     }
 
