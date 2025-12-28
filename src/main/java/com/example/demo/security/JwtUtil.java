@@ -1242,11 +1242,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtUtil {
 
-    public String generateToken(String username) {
-        return "dummy-token-" + username;
+    // Generate token using email
+    public String generateToken(String email, String role) {
+        return "dummy-token-" + email + "-" + role;
+    }
+
+    // Extract email from token
+    public String extractEmail(String token) {
+        if (token == null) return null;
+        String[] parts = token.split("-");
+        return parts.length >= 3 ? parts[2] : null;
+    }
+
+    // Extract role from token
+    public String extractRole(String token) {
+        if (token == null) return null;
+        String[] parts = token.split("-");
+        return parts.length >= 4 ? parts[3] : null;
     }
 
     public boolean validateToken(String token) {
         return token != null && token.startsWith("dummy-token");
     }
 }
+
