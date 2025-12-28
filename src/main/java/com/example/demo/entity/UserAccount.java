@@ -39,6 +39,15 @@ public class UserAccount {
         updatedAt = LocalDateTime.now();
     }
     
+    // Public methods for testing
+    public void prePersist() {
+        onCreate();
+    }
+    
+    public void preUpdate() {
+        onUpdate();
+    }
+    
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
