@@ -124,12 +124,22 @@ public class TransferSuggestion {
     @Column(name = "reason")
     private String reason;
 
-    // Automatically set generatedAt before insert
-    @PrePersist
+   @PrePersist
     protected void onCreate() {
-        this.generatedAt = LocalDateTime.now();
+    this.generatedAt = LocalDateTime.now();
+
+    if (this.quantity == null) {
+        this.quantity = 0;
     }
 
+    if (this.priority == null) {
+        this.priority = "PENDING";
+    }
+
+    if (this.status == null) {
+        this.status = "PENDING";
+    }
+}
     // Getters and Setters
     public Long getId() {
         return id;
