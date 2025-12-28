@@ -40,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 @org.springframework.test.context.ActiveProfiles("test")
 @Listeners({TestResultListener.class})
-public class MultiLocationInventoryBalancerTest extends AbstractTestNGSpringContextTests {
+public class  extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private MockMvc mockMvc;
