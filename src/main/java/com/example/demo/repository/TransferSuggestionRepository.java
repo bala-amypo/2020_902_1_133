@@ -23,6 +23,6 @@ public interface TransferSuggestionRepository
     List<TransferSuggestion> findByProduct_Id(Long productId);
 
     // required by service
-    List<TransferSuggestion> findBySourceStoreId(Long sourceStoreId);
+    List<TransferSuggestion> findBySourceStore_Id(Long sourceStoreId);
 }
 
