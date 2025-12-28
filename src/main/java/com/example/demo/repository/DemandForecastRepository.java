@@ -10,5 +10,6 @@ import java.util.List;
 public interface DemandForecastRepository extends JpaRepository<DemandForecast, Long> {
     List<DemandForecast> findByStoreAndProductAndForecastDateAfter(Store store, Product product, LocalDate date);
     List<DemandForecast> findByStore_Id(Long storeId);
+    List<DemandForecast> findByProduct_Id(Long productId);
     DemandForecast findByStore_IdAndProduct_Id(Long storeId, Long productId);
 }

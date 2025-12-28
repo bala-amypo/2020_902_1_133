@@ -34,6 +34,12 @@ public class TransferSuggestion {
     @Column(nullable = false)
     private String status = "PENDING";
     
+    @Column(name = "suggested_quantity")
+    private Integer suggestedQuantity;
+    
+    @Column(name = "reason")
+    private String reason;
+    
     @PrePersist
     protected void onCreate() {
         suggestedAt = LocalDateTime.now();
@@ -63,4 +69,12 @@ public class TransferSuggestion {
     
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    
+    public Integer getSuggestedQuantity() { return suggestedQuantity; }
+    public void setSuggestedQuantity(Integer suggestedQuantity) { this.suggestedQuantity = suggestedQuantity; }
+    
+    public String getReason() { return reason; }
+    public void setReason(String reason) { this.reason = reason; }
+    
+    public LocalDateTime getGeneratedAt() { return suggestedAt; }
 }
