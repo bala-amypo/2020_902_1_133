@@ -19,10 +19,9 @@ import java.util.List;
 public interface TransferSuggestionRepository
         extends JpaRepository<TransferSuggestion, Long> {
 
-    // required by test
     List<TransferSuggestion> findByProduct_Id(Long productId);
 
-    // required by service
     List<TransferSuggestion> findBySourceStore_Id(Long sourceStoreId);
 }
+
 
