@@ -50,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
             throw new BadRequestException("Invalid credentials");
         }
         
-        String token = jwtUtil.generateToken(user);
+        String token = jwtUtil.generateToken(user); 
         
         AuthResponseDto response = new AuthResponseDto();
         response.setToken(token);
