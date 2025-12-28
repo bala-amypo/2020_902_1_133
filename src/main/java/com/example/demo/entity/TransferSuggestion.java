@@ -28,8 +28,8 @@ public class TransferSuggestion {
     @Column(nullable = false)
     private String priority = "PENDING";
     
-    @Column(name = "suggested_at")
-    private LocalDateTime suggestedAt;
+    @Column(name = "generated_at")
+    private LocalDateTime generatedAt;
     
     @Column(nullable = false)
     private String status = "PENDING";
@@ -42,7 +42,7 @@ public class TransferSuggestion {
     
     @PrePersist
     protected void onCreate() {
-        suggestedAt = LocalDateTime.now();
+        generatedAt = LocalDateTime.now();
     }
     
     // Getters and Setters
@@ -64,8 +64,9 @@ public class TransferSuggestion {
     public String getPriority() { return priority; }
     public void setPriority(String priority) { this.priority = priority; }
     
-    public LocalDateTime getSuggestedAt() { return suggestedAt; }
-    public void setSuggestedAt(LocalDateTime suggestedAt) { this.suggestedAt = suggestedAt; }
+    public LocalDateTime getGeneratedAt() { return generatedAt; }
+    public void setGeneratedAt(LocalDateTime generatedAt) { this.generatedAt = generatedAt; }
+
     
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
